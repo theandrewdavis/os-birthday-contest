@@ -11,7 +11,7 @@ get '/' do
   phrase = 'В советской России OpenStack желает вам «с днем рождения»'
   english = AzureTranslator.translate(phrase, 'ru', 'en')
   parts = SovietInverter.new(english).uninvert.data
-  "#{parts['do'].capitalize} #{parts['io']}"
+  "#{parts['do'].titleize} #{parts['io']}"
 end
 
 get '/src' do
@@ -88,5 +88,11 @@ class SovietInverter
   def uninvert
     @data = /^In Soviet Russia[,]? (?<io>\w+) (?<verb>\w+) (?<subject>\w+) (?<do>.+)[\.]?$/i.match(@string)
     self
+  end
+end
+
+class String
+  def titleize
+    self.split(' ').map {|w| w.capitalize }.join(' ')
   end
 end
