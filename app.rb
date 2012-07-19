@@ -45,10 +45,9 @@ class AzureToken
   end
 
   def self.request_new
-    azure_credentials = YAML.load(IO.read('azure.yaml'))
     response = RestClient.post(BASE_URL,
-      client_id: azure_credentials['client_id'],
-      client_secret: azure_credentials['client_secret'],
+      client_id: ENV['AZURE_CLIENT_ID'],
+      client_secret: ENV['AZURE_CLIENT_SECRET'],
       scope: 'http://api.microsofttranslator.com',
       grant_type: 'client_credentials'
     )
